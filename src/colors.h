@@ -11,9 +11,14 @@ namespace COLORS{
         uint8_t b;
         uint8_t a;
 
+        RGBA_DATA(const uint32_t);
         RGBA_DATA(const uint8_t r = 0,const uint8_t g = 0,const uint8_t b= 0,const uint8_t a = 255);
+
+        RGBA_DATA operator=(const RGBA_DATA& rhv);
         RGBA_DATA operator-(const RGBA_DATA& rhv) const;
         RGBA_DATA operator+(const RGBA_DATA& rhv) const;
+
+        operator uint32_t() const;
 
         uint32_t pack() const;
         RGBA_DATA invert() const;

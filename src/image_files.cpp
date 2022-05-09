@@ -1,9 +1,10 @@
 #include "image_files.h"
 
+
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "../lib/stb_image_write.h"
 
-void drop_to(const std::string& filename, FILE_TYPES type, const std::vector<uint32_t> &image, const size_t w, const size_t h){
+void drop_to(const std::string& filename, FILE_TYPES type, const std::vector<COLORS::RGBA_DATA> &image, const size_t w, const size_t h){
     switch (type)
     {
     case FILE_TYPES::PNG:

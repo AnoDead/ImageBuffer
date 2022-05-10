@@ -12,11 +12,12 @@
 
 
 ImageBuffer::ImageBuffer(size_t w, size_t h, bool clip, COLORS::RGBA_DATA fillcolor) :
-        buffer(w * h, fillcolor), width(w), height(h), clip(clip), fill_color(fillcolor) {
+        width(w), height(h), _size(width*height), fill_color(fillcolor), clip(clip), buffer(w*h, fillcolor)
+{
 }
 
 size_t ImageBuffer::size() const{
-    return width * height;
+    return _size;
 }
 
 size_t ImageBuffer::get_width() const { return width; }
@@ -34,12 +35,13 @@ void ImageBuffer::set_clip(bool c) { clip = c; }
 void ImageBuffer::resize(size_t w, size_t h) {
     width = w;
     height = h;
-    // buffer.resize(w * h);
+    _size = w*h;
+    buffer.resize(w * h);
 }
 
 
 bool ImageBuffer::is_inside(size_t x, size_t y) const {
-    return (x >= 0 && x < width) && (y >= 0 && y < height);
+    return (x < width) && (y < height);
 }
 
 
@@ -61,8 +63,7 @@ void ImageBuffer::set_pixel(size_t x, size_t y, RGBA_DATA color) {
 
 
 void ImageBuffer::clear() {
-    for (auto &i: buffer)
-        i = fill_color;
+    std::fill(buffer.begin(), buffer.end(), fill_color);
 }
 
 
@@ -134,7 +135,6 @@ void ImageBuffer::draw_circle(int32_t x, int32_t y, int32_t r, RGBA_DATA color) 
 #include "image_files.h"
 
 void ImageBuffer::drop(const std::string &filename, FILE_TYPES type) {
-    // drop_ppm_image(filename, buffer, width, height);
     drop_to(filename, type, buffer, width, height);
 }
 
@@ -143,5 +143,5 @@ ImageBuffer ImageBuffer::filter(filter_func_t func) {
     for (size_t y = 0; y < height; y++)
         for (size_t x = 0; x < width; x++)
             buffer.set_pixel(x, y, func(x, y, *this));
-    return std::move(buffer);
+    return buffer;
 }

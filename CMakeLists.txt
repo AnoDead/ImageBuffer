@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(ImageBuffer)
 
 add_compile_options(-O3)
+add_compile_options(-Wall)
 
 
 set(CMAKE_CXX_STANDARD 17)

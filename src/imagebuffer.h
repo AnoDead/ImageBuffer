@@ -36,7 +36,7 @@ public:
 
     [[nodiscard]] bool is_inside(size_t x, size_t y) const;
 
-    RGBA_DATA get_pixel(size_t x, size_t y) const;
+    [[nodiscard]] RGBA_DATA get_pixel(size_t x, size_t y) const;
 
     void set_pixel(size_t x, size_t y, RGBA_DATA color);
 
@@ -68,6 +68,7 @@ private:
 
     size_t width;
     size_t height;
+    size_t _size;
 
     RGBA_DATA fill_color;
 
